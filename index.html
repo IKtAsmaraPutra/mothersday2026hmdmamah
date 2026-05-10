@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#fdf8f0">
+<title>Happy Mother's Day</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --rose:        #c9736a;
+  --rose-light:  #f5e4e2;
+  --rose-pale:   #fdf6f5;
+  --blush:       #e8b4aa;
+  --sage:        #8a9e8c;
+  --sage-light:  #dce8dc;
+  --cream:       #fdf8f0;
+  --warm-brown:  #6b4c42;
+  --text-dark:   #3a2e2b;
+  --text-mid:    #7a6259;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--cream);
+  color: var(--text-dark);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── FLOATING PETALS ─── */
+.petals-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.petal {
+  position: absolute;
+  top: -60px;
+  background: radial-gradient(ellipse at 40% 30%, #f5c8c2, #e8b4aa88);
+  border-radius: 50% 50% 50% 10% / 60% 60% 40% 30%;
+  opacity: 0;
+  animation: fall linear infinite;
+}
+@keyframes fall {
+  0%   { opacity: 0; transform: translateY(0) rotate(0deg) translateX(0); }
+  5%   { opacity: 0.65; }
+  90%  { opacity: 0.4; }
+  100% { opacity: 0; transform: translateY(110vh) rotate(540deg) translateX(40px); }
+}
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-left {
+  background: var(--rose-light);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5rem 3rem 5rem 5rem;
+  position: relative;
+  z-index: 2;
+}
+.hero-left::after {
+  content: '';
+  position: absolute;
+  right: -60px; top: 0; bottom: 0;
+  width: 120px;
+  background: var(--rose-light);
+  transform: skewX(-4deg);
+  z-index: 1;
+}
+
+.tag {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: fadeSlideDown 1s ease both;
+}
+.tag::before {
+  content: '';
+  display: block;
+  width: 28px; height: 1px;
+  background: var(--rose);
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 5vw, 5.2rem);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--warm-brown);
+  margin-bottom: 1.8rem;
+  animation: fadeSlideDown 1s 0.15s ease both;
+}
+h1 em { font-style: italic; color: var(--rose); }
+
+.hero-subtitle {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--text-mid);
+  line-height: 1.85;
+  max-width: 320px;
+  margin-bottom: 2.5rem;
+  animation: fadeSlideDown 1s 0.3s ease both;
+}
+
+.scroll-hint {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--text-mid);
+  text-transform: uppercase;
+  animation: fadeSlideDown 1s 0.45s ease both;
+}
+.scroll-hint span {
+  width: 40px; height: 1px;
+  background: var(--blush);
+  display: block;
+  animation: scroll-line 2s ease-in-out infinite;
+}
+@keyframes scroll-line {
+  0%,100% { width: 40px; opacity: 0.5; }
+  50%      { width: 65px; opacity: 1; }
+}
+
+.hero-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cream);
+  padding: 4rem 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── HERO PHOTO FRAME ─── */
+.photo-frame-wrap {
+  position: relative;
+  width: min(300px, 85%);
+  aspect-ratio: 3/4;
+  animation: floatUp 1s 0.2s ease both;
+}
+.photo-frame-deco {
+  position: absolute;
+  inset: -18px;
+  border: 1.5px solid var(--blush);
+  border-radius: 4px;
+  transform: rotate(3deg);
+  transition: transform 0.6s ease;
+}
+.photo-frame-wrap:hover .photo-frame-deco { transform: rotate(5deg); }
+
+.photo-frame {
+  position: relative;
+  z-index: 1;
+  width: 100%; height: 100%;
+  background: var(--rose-light);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+.photo-frame:hover {
+  transform: scale(1.015);
+  box-shadow: 0 24px 60px rgba(201,115,106,0.2);
+}
+.photo-frame img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ─── IMAGE PLACEHOLDER (shown when file missing) ─── */
+.img-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--rose-light);
+  color: var(--blush);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: 'Jost', sans-serif;
+  pointer-events: none;
+}
+.img-fallback svg {
+  width: 34px; height: 34px;
+  stroke: var(--blush); opacity: 0.55;
+}
+
+/* ─── QUOTE SECTION ─── */
+.quote-section {
+  padding: 6rem 1.5rem;
+  text-align: center;
+  background: var(--rose-pale);
+  position: relative;
+  overflow: hidden;
+}
+.quote-section::before {
+  content: '\201C';
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22rem;
+  color: var(--blush);
+  opacity: 0.12;
+  position: absolute;
+  top: -7rem; left: 50%;
+  transform: translateX(-50%);
+  line-height: 1;
+  pointer-events: none;
+}
+blockquote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.35rem, 4vw, 2.4rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--warm-brown);
+  max-width: 680px;
+  margin: 0 auto 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+.quote-attr {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-mid);
+}
+
+/* ─── REASONS SECTION ─── */
+.reasons-section {
+  padding: 6rem 1.25rem 7rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.section-header { text-align: center; margin-bottom: 3.5rem; }
+.section-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 300;
+  color: var(--warm-brown);
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+.section-header h2 em { font-style: italic; color: var(--rose); }
+.divider {
+  width: 60px; height: 1px;
+  background: linear-gradient(to right, transparent, var(--blush), transparent);
+  margin: 0 auto;
+}
+
+.reasons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+/* ─── REASON CARD ─── */
+.reason-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.4s cubic-bezier(.25,.8,.25,1),
+              box-shadow 0.4s ease;
+  box-shadow: 0 4px 20px rgba(201,115,106,0.06);
+}
+.reason-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 28px 60px rgba(201,115,106,0.14);
+}
+.reason-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(to right, var(--rose), var(--blush));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s ease;
+  z-index: 2;
+}
+.reason-card:hover::before { transform: scaleX(1); }
+
+/* card image area */
+.card-img-wrap {
+  width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  background: var(--rose-light);
+  position: relative;
+}
+.card-img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.65s cubic-bezier(.25,.8,.25,1);
+}
+.reason-card:hover .card-img-wrap img { transform: scale(1.07); }
+
+/* caption below photo */
+.card-caption {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.88rem;
+  font-style: italic;
+  color: var(--text-mid);
+  background: var(--rose-pale);
+  padding: 0.55rem 1.25rem;
+  border-bottom: 1px solid var(--rose-light);
+  line-height: 1.4;
+}
+
+/* card text */
+.card-body { padding: 1.5rem 1.5rem 1.75rem; }
+.reason-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.5rem;
+  font-weight: 300;
+  color: var(--rose-light);
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+.reason-card h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--warm-brown);
+  margin-bottom: 0.6rem;
+}
+.card-body p {
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--text-mid);
+  line-height: 1.8;
+}
+
+/* ─── LETTER SECTION ─── */
+.letter-section {
+  padding: 6rem 1.25rem;
+  background: var(--sage-light);
+  position: relative;
+}
+.letter-wrap {
+  max-width: 660px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 4px;
+  padding: 3.5rem 3rem;
+  position: relative;
+  box-shadow: 0 30px 80px rgba(138,158,140,0.15);
+}
+.letter-wrap::before {
+  content: '';
+  position: absolute;
+  top: 14px; left: 14px;
+  right: -14px; bottom: -14px;
+  border: 1px solid var(--sage);
+  border-radius: 4px;
+  z-index: -1;
+  opacity: 0.5;
+}
+.letter-wrap p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--text-dark);
+  line-height: 2;
+}
+.letter-wrap p + p { margin-top: 1.1rem; }
+.letter-signature {
+  margin-top: 2.5rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-style: italic;
+  color: var(--rose);
+}
+.petal-bg {
+  position: absolute;
+  opacity: 0.06;
+  right: -30px; top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* ─── FOOTER ─── */
+.footer {
+  padding: 4rem 1.5rem;
+  text-align: center;
+  background: var(--warm-brown);
+  color: rgba(255,255,255,0.65);
+  position: relative;
+  overflow: hidden;
+}
+.footer::before {
+  content: '\2661';
+  position: absolute;
+  font-size: 18rem;
+  color: white;
+  opacity: 0.03;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  pointer-events: none;
+}
+.footer-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  font-weight: 300;
+  font-style: italic;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+.footer small {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.45;
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeSlideDown {
+  from { opacity: 0; transform: translateY(-18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes floatUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.75s cubic-bezier(.25,.8,.25,1),
+              transform 0.75s cubic-bezier(.25,.8,.25,1);
+}
+.fade-up.visible { opacity: 1; transform: none; }
+
+.reasons-grid .reason-card:nth-child(1) { transition-delay: 0s; }
+.reasons-grid .reason-card:nth-child(2) { transition-delay: 0.1s; }
+.reasons-grid .reason-card:nth-child(3) { transition-delay: 0.2s; }
+.reasons-grid .reason-card:nth-child(4) { transition-delay: 0.3s; }
+
+/* ─── MOBILE — iPhone-first ─── */
+@media (max-width: 700px) {
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-left { order: 2; padding: 3rem 1.5rem 3.5rem; }
+  .hero-left::after { display: none; }
+  .hero-right { order: 1; padding: 3rem 1.5rem 2rem; background: var(--rose-pale); }
+  .hero-subtitle { max-width: 100%; }
+  .photo-frame-wrap { width: min(240px, 72vw); }
+  .reasons-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .letter-wrap { padding: 2.5rem 1.5rem; }
+  .letter-wrap::before { display: none; }
+  .quote-section { padding: 4rem 1.25rem; }
+  .reasons-section { padding: 4.5rem 1.25rem; }
+}
+@media (max-width: 390px) {
+  h1 { font-size: 2.4rem; }
+  .photo-frame-wrap { width: min(210px, 80vw); }
+}
+
+/* notch / home bar safe area */
+.footer { padding-bottom: max(4rem, env(safe-area-inset-bottom, 4rem)); }
+</style>
+</head>
+<body>
+
+<!-- FLOATING PETALS -->
+<div class="petals-canvas" id="petals"></div>
+
+<!-- ════════════════════════════════════
+     HERO
+════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="tag">Mother's Day 2026</div>
+    <h1>To the woman<br>who is my<br><em>everything</em></h1>
+    <p class="hero-subtitle">
+      There are no words grand enough, no gift precious enough, no gesture tender enough — but today i try, because you deserve to be celebrated.
+    </p>
+    <div class="scroll-hint"><span></span> Scroll to read</div>
+  </div>
+
+  <div class="hero-right">
+    <div class="photo-frame-wrap">
+      <div class="photo-frame-deco"></div>
+      <div class="photo-frame">
+        <!--
+          ══════════════════════════════════════════
+          HERO PHOTO
+          ► Replace "mom_hero.jpg" below with your
+            image filename (keep the quotes).
+          ► Put the image in the same folder as
+            this HTML file.
+          ══════════════════════════════════════════
+        -->
+        <img src="mom_hero.jpeg" alt="Mom" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="img-fallback" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          mom_hero.jpg
+        </div>
+      </div>
+      <!-- corner florals -->
+      <svg style="position:absolute;top:-10px;left:-10px;opacity:0.14;pointer-events:none;transform:rotate(-30deg)" width="70" height="70" viewBox="0 0 80 80">
+        <circle cx="40" cy="20" r="10" fill="#c9736a"/><circle cx="60" cy="40" r="10" fill="#c9736a"/>
+        <circle cx="40" cy="60" r="10" fill="#c9736a"/><circle cx="20" cy="40" r="10" fill="#c9736a"/>
+        <circle cx="40" cy="40" r="8" fill="#e8b4aa"/>
+      </svg>
+      <svg style="position:absolute;bottom:-10px;right:-10px;opacity:0.14;pointer-events:none;transform:rotate(150deg)" width="70" height="70" viewBox="0 0 80 80">
+        <circle cx="40" cy="20" r="10" fill="#c9736a"/><circle cx="60" cy="40" r="10" fill="#c9736a"/>
+        <circle cx="40" cy="60" r="10" fill="#c9736a"/><circle cx="20" cy="40" r="10" fill="#c9736a"/>
+        <circle cx="40" cy="40" r="8" fill="#e8b4aa"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     QUOTE
+════════════════════════════════════ -->
+<section class="quote-section">
+  <blockquote>
+    "A mother is she who can take the place of all others but whose place no one else can take."
+  </blockquote>
+  <p class="quote-attr">— Cardinal Mermillod</p>
+</section>
+
+<!-- ════════════════════════════════════
+     REASONS I LOVE YOU, MOM
+════════════════════════════════════ -->
+<section class="reasons-section">
+  <div class="section-header fade-up">
+    <h2>Reasons I love<br>you, <em>Mom</em></h2>
+    <div class="divider" style="margin-top:1.25rem"></div>
+  </div>
+
+  <div class="reasons-grid">
+
+    <!-- ── CARD 1 ── -->
+    <div class="reason-card fade-up">
+      <div class="card-img-wrap">
+        <!--
+          ══════════════════════════════════════════
+          PHOTO 1
+          ► Replace "mom1.jpg" with your filename.
+          ══════════════════════════════════════════
+        -->
+        <img src="mom1.jpeg" alt="Mom — Your Warmth"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="img-fallback" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          mom1.jpg
+        </div>
+      </div>
+      <!--
+        CAPTION ► Describe this photo (edit this line):
+      -->
+      <div class="card-caption">Us!!! that one noodle place.</div>
+      <div class="card-body">
+        <div class="reason-number">01</div>
+        <h3>Your Warmth</h3>
+        <p>No matter how cold the world feels, your presence has always been the warmest in the universe.</p>
+      </div>
+    </div>
+
+    <!-- ── CARD 2 ── -->
+    <div class="reason-card fade-up">
+      <div class="card-img-wrap">
+        <!--
+          ══════════════════════════════════════════
+          PHOTO 2
+          ► Replace "mom2.jpg" with your filename.
+          ══════════════════════════════════════════
+        -->
+        <img src="mom2.jpeg" alt="Mom — Your Strength"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="img-fallback" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          mom2.jpg
+        </div>
+      </div>
+      <!--
+        CAPTION ► Describe this photo (edit this line):
+      -->
+      <div class="card-caption"></div>
+      <div class="card-body">
+        <div class="reason-number">02</div>
+        <h3>Your Strength</h3>
+        <p>You carried so much, silently, gracefully, so that we never had to feel the weight of it.</p>
+      </div>
+    </div>
+
+    <!-- ── CARD 3 ── -->
+    <div class="reason-card fade-up">
+      <div class="card-img-wrap">
+        <!--
+          ══════════════════════════════════════════
+          PHOTO 3
+          ► Replace "mom3.jpg" with your filename.
+          ══════════════════════════════════════════
+        -->
+        <img src="mom3.jpeg" alt="Mom — Your Wisdom"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="img-fallback" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          mom3.jpg
+        </div>
+      </div>
+      <!--
+        CAPTION ► Describe this photo (edit this line):
+      -->
+      <div class="card-caption"></div>
+      <div class="card-body">
+        <div class="reason-number">03</div>
+        <h3>Your Wisdom</h3>
+        <p>The way you act, every piece of advice you gave, you are someone i look up to.</p>
+      </div>
+    </div>
+
+    <!-- ── CARD 4 ── -->
+    <div class="reason-card fade-up">
+      <div class="card-img-wrap">
+        <!--
+          ══════════════════════════════════════════
+          PHOTO 4
+          ► Replace "mom4.jpg" with your filename.
+          ══════════════════════════════════════════
+        -->
+        <img src="mom4.jpeg" alt="Mom — Your Laughter"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="img-fallback" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          mom4.jpg
+        </div>
+      </div>
+      <!--
+        CAPTION ► Describe this photo (edit this line):
+      -->
+      <div class="card-caption">Silly faces!!! 😝😝</div>
+      <div class="card-body">
+        <div class="reason-number">04</div>
+        <h3>Your Smile</h3>
+        <p>The way you smile is one of the most beautiful things I have ever seen.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     LETTER
+════════════════════════════════════ -->
+<section class="letter-section">
+  <div class="letter-wrap fade-up">
+    <p>Dear Mom,</p>
+    <p>
+      There are moments in life when I realise, suddenly and completely, how lucky I am to have you. It happens in ordinary places: watching people on the roads to class, hearing a faimiliar voice, catching a familiar gesture that I somehow now find in myself.
+    </p>
+    <p>
+      You gave me more than a home. You gave me a sense of security, the courage to try, and the knowledge that there is someone i can rely on.
+    </p>
+    <p>
+      No gift today will ever match what you have given me in my life. But I hope this small moment makes you feel, even briefly, how deeply you are adored.
+    </p>
+    <div class="letter-signature">With all my love ♡</div>
+    <svg class="petal-bg" width="200" height="200" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="100" rx="30" ry="90" fill="#c9736a" transform="rotate(0 100 100)"/>
+      <ellipse cx="100" cy="100" rx="30" ry="90" fill="#c9736a" transform="rotate(45 100 100)"/>
+      <ellipse cx="100" cy="100" rx="30" ry="90" fill="#c9736a" transform="rotate(90 100 100)"/>
+      <ellipse cx="100" cy="100" rx="30" ry="90" fill="#c9736a" transform="rotate(135 100 100)"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     FOOTER
+════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-title">Happy Mother's Day</div>
+  <small>Made with love, just for you — 2026</small>
+</footer>
+
+<script>
+/* ── Falling petals ── */
+(function() {
+  const canvas = document.getElementById('petals');
+  const count = window.innerWidth < 600 ? 10 : 18;
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    const size = 10 + Math.random() * 10;
+    p.style.left            = (Math.random() * 100) + '%';
+    p.style.width           = size + 'px';
+    p.style.height          = (size * 1.4) + 'px';
+    p.style.animationDuration  = (6 + Math.random() * 8) + 's';
+    p.style.animationDelay     = (Math.random() * 12) + 's';
+    p.style.rotate          = (Math.random() * 360) + 'deg';
+    canvas.appendChild(p);
+  }
+})();
+
+/* ── Scroll fade-up ── */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
